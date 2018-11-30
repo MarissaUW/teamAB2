@@ -15,3 +15,4 @@ At the end of the quarter we will have a project fair, at which all the teams wi
 <li>Devise a visual representation of your data (i.e., chart, map, etc.).  Ideally, this should be an interactive visualization with ability to interact with the interface (hover, click, drag, etc.), or change the data being displayed (i.e., the chart responds to a set of controls, such as which data is being displayed)</li><br>
 <li>Tailor your resource to a specific target audience.  The way you frame your solution for a scientific versus general audience is quite different</li><br>
 
+![rubric](/Users/marissa/Desktop/rubric.png)
