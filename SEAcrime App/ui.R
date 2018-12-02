@@ -6,10 +6,10 @@ ui <- navbarPage("Police Activity in Seattle",
            
   tabPanel("Data explorer"),
     fluidRow(
-      column(3
+      column(3,
         selectInput("neighborhood", "Neighborhood", c("All neighborhoods"="", structure()))
         )
-    )
+    ),
            
            
            

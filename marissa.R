@@ -18,7 +18,7 @@ library(tibble)
 library(GISTools)
 library(gghighlight)
 
-saveRDS(clean_calldata, file = "clean_calldata.Rda")
+saveRDS(clean_calldata, file = "clean_calldata.Rds")
 load("filtered_incident.Rda")
 #=====================================call data
 rawincidentdata <- read.csv("/Users/marissa/Downloads/Seattle_Police_Department_911_Incident_Response.csv")
