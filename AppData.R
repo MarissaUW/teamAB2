@@ -3,10 +3,16 @@ library(shiny)
 #raw data sets
 rawcalldata <- read.csv("/Users/marissa/Desktop/INFO201/FINAL PROJECT/data/5yr_Call_Data.csv", stringsAsFactors = FALSE, header = TRUE)
 rawcrimedata <- read.csv("/Users/marissa/Desktop/INFO201/REPOS/teamAB2/data/5yr_Crime_Data.csv", stringsAsFactors = FALSE, header = TRUE)
+rawincidentdata <- read.csv("/Users/marissa/Downloads/Seattle_Police_Department_911_Incident_Response.csv", stringsAsFactors = FALSE, header = TRUE)
+
 #test data sets
 test_calldata <- sample_n(rawcalldata, 200)
 test_crimedata <- sample_n(rawcrimedata, 200)
-#call data subs
+#data subssets
+clean_calldata
+clean_crimedata
+filtered_incident
+
 calldata_2018 <- clean_calldata
 
 

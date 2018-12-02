@@ -18,7 +18,7 @@ library(tibble)
 library(GISTools)
 library(gghighlight)
 
-saveRDS(clean_calldata, file = "clean_calldata.Rds")
+saveRDS(clean_crimedata, file = "clean_crimedata.Rds")
 load("filtered_incident.Rda")
 #=====================================call data
 rawincidentdata <- read.csv("/Users/marissa/Downloads/Seattle_Police_Department_911_Incident_Response.csv")
@@ -32,9 +32,6 @@ filtered_incident$DateTimeClear <- fi$Event.Clearance.Date
 fi <- filtered_incident
 
 fi$x <- strptime(fi$Event.Clearance.Date, format = "%m/%d/%Y %I:%M:%S %p")
-
-fi$Year <- format(fi$DateTimeClear, "%Y")
-fi$Hour <- format(fi$DateTimeClear, "%")
 
 clean_calldata$Year <- format(clean_calldata$DateTime, "%Y")
 clean_calldata$Time <- format(clean_calldata$DateTime, "%T")
@@ -103,6 +100,18 @@ filtered_incident$long <- filtered_incident$Incident.Location %>%
   gsub("[()]", "", .) %>% 
   strsplit(", ") %>% 
   sapply("[", 2)
+
+clean_crimedata <- rawcrimedata[c(11,10,2,3,7,6)]
+clean_crimedata$Date <- strptime(clean_crimedata$Occurred.Date, format="%m/%d/%Y")
+clean_crimedata$Year <- format(clean_crimedata$Date, "%Y")
+clean_crimedata$Month <- format(clean_crimedata$Date, "%b")
+clean_crimedata$Day <- format(clean_crimedata$Date, "%a")
+
+bh <- clean_crimedata[c(1,2)]
+sapply(clean_crimedata, function(x) length(unique(x)))
+hood2beat <- unique(bh)
+
+
 
 #calldata <- Freq of call by initial/final type == call_init/call_fin
 #=====================================crime data
