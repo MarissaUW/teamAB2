@@ -1,5 +1,41 @@
+library(leaflet)
+library(ggplot2)
+library(shiny)
+library(shinyjs)
+
+crime_set <- as.data.frame(read.csv("5yr_Crime_Data.csv"))
+crime_categories <- unique(crime_set$Crime.Subcategory)
+neighborhoods <- unique(crime_set$Neighborhood)
+
 navbarPage("Seattle Crime Analysis",
-           tabPanel("Summary"
+           tabPanel("Summary",
+                    h1("Seattle Crime Data "),
+                    
+                    h2("Data Set:"),
+                    h4("Our project takes data from the", tags$a(href = "https://data.seattle.gov/Public-Safety/Crime-Data/4fs7-3vj5", "City of Seattle"),
+                       "open data program. The data we have chosen to use is the crime data from the public safety department.
+                       The dataset we are using was downloaded as a CSV file with up to date information as of November 15, 2018."),
+                    
+                    h2("Questions:"),
+                    h4("The initial questions we set out asking that drove the direction of our project were:"),
+                    h4(tags$li("What is the most common type of crime in the U-District?")),
+                    h4(tags$li("What neighborhoods have the lowest and highest rates of crime?")),
+                    h4(tags$li("Which areas have had the highest increase in crime over the past year?")),
+                    h4("While these were our guiding questions, we designed our site to be interactive so that users can ask questions that interest them about neighborhoods,
+                      crimes, and combinations of both based on a multitude of factors."),
+                    
+                    h2("General Observations:"),
+                    h4("Some major points that we picked up on while analyzing this data were that Queen Anne, Capitol Hill, and Northgate have high crime rates compared to other
+                      neighborhoods, 12am-3am is the time where the most crimes occur, and car prowls are by far the most occurring crime."),
+                    
+                    h2("Creators:"),
+                    h4(tags$li("Claire Lynch")),
+                    h4(tags$li("Ben Nielsen")),
+                    h4(tags$li("Marissa ...")),
+                    h4(tags$li("Paola Vanegas"))
+           ),
+           tabPanel("P Crime Map",
+                    leafletOutput("mymap")
            ),
            
            tabPanel("Crime Map",
@@ -17,16 +53,101 @@ navbarPage("Seattle Crime Analysis",
                                   height = "auto")
                     ),
            
+           tabPanel("Ben",
+                    sidebarLayout(
+                      sidebarPanel(
+                        crime_data <- read.csv("5yr_Crime_Data.csv", stringsAsFactors = FALSE),
+                        selectInput("neighborhood_ben", "Neighborhood:", choices = unique(crime_data$Neighborhood)),
+                        selectInput("year", "Year:", choices = c(2014,2015,2016,2017,2018))
+                      ),
+                      
+                      # Show a plot of the generated distribution
+                      mainPanel(
+                        plotOutput("Plot_ben")
+                      )
+                    )
+           ),
+           tabPanel("Neighborhoods by Broad Crime",
+                    sidebarLayout(
+                      sidebarPanel(
+                        radioButtons("data_choice_crime", "Data to View:",
+                                     c("View All" = "all",
+                                       "View Single Crime" = "single_crime")),
+                        useShinyjs(),
+                        disabled(
+                          selectInput("crime", "Crime",
+                                      choices = crime_categories)
+                        ),
+                        dateRangeInput("date_crime", "Date Range",
+                                       format = "mm/dd/yyyy",
+                                       start = "01/01/2014",
+                                       end = "12/31/2017",
+                                       min = "01/01/2014",
+                                       max = "01/01/2018",
+                                       startview = "year",
+                                       weekstart = 0),
+                        sliderInput("time_range_crime", "Time Range (Hours):",
+                                    range(crime_set$Occurred.Time),
+                                    min = 0,
+                                    max = 24),
+                        radioButtons("asc_desc", "Order of Data:",
+                                     c("Sort by Lowest Rate of Crime" = "asc",
+                                       "Sort by Highest Rate of Crime" = "desc")),
+                        sliderInput("num_neighborhoods", "Number of Neighborhoods to View",
+                                    min = 1, 
+                                    max = 59,
+                                    59)
+                      ),
+                      mainPanel(
+                        plotOutput("neighborhoodCrimePlot")
+                      )
+                    )
+           ),
+           
+           tabPanel("Broad Crimes by Neighborhoods",
+                    sidebarLayout(
+                      sidebarPanel(
+                        radioButtons("data_choice_neighborhood", "Data to View:",
+                                     c("View All" = "all",
+                                       "View Single Neighborhood" = "single_neighborhood")),
+                        useShinyjs(),
+                        disabled(
+                          selectInput("neighborhood", "Neighborhood",
+                                      choices = neighborhoods)
+                        ),
+                        dateRangeInput("date_neighborhood", "Date Range",
+                                       format = "mm/dd/yyyy",
+                                       start = "01/01/2014",
+                                       end = "12/31/2017",
+                                       min = "01/01/2014",
+                                       max = "01/01/2018",
+                                       startview = "year",
+                                       weekstart = 0),
+                        sliderInput("time_range_neighborhood", "Time Range (Hours)",
+                                    range(crime_set$Occurred.Time),
+                                    min = 0,
+                                    max = 24)
+                      ),
+                      mainPanel(
+                        plotOutput("crimePlot")
+                      )
+                    )
+           ),
            tabPanel("Plot",
                     sidebarLayout(
                       sidebarPanel(
-                        radioButtons("plotType", "Plot type",
-                                     c("Scatter"="p", "Line"="l")
-                        )
+                        # Creates Radio Buttons that allow the user to select a year (between 2014 and 2018)
+                        radioButtons("year_choice", "Choose a Year:", c(2014, 2015, 2016, 2017, 2018),
+                                     selected = 2014),
+                        # Displays the "month" widget 
+                        uiOutput("month"),
+                        # Displays the "neighborhood" widget 
+                        uiOutput("neighborhood_select")
                       ),
-                      mainPanel("Graph Title",
-                        plotOutput("plot")
+                      
+                      # Show a plot of the generated distribution
+                      mainPanel(
+                        plotOutput("linePlot")
                       )
-                    )
-           )
+                    ))
 )
