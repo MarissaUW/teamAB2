@@ -1,0 +1,87 @@
+    #Reactive data frame that will dynamically change based on date range, day of week, and crime category chosen
+   ## crime_data <- reactive({    
+      #subset data frame by date range
+     ## sea_crime_data <- sea_crime_data[sea_crime_data$Occured.Date %in% seq.Date(input$date_time[1], input$date_time[2], by = "days"),]                
+     ## sea_crime_data
+   ##   crime_dataset <- crime_set[crime_set$Occurred.Date %in% seq.Date(input$date_time[1], input$date_time[2], by = "day"),]
+   ##   })
+   
+   
+   
+   
+   
+   
+   
+    ############# SUMMARY SECTION ###############
+    #This will print the number of rows and columns in the data frame
+   ## output$dim <- renderPrint({
+    ##  crime_data_stats <- paste("There are", nrow(crime_data()), "rows and", ncol(crime_data()), "columns for sfo_crime_data.")
+   ##   print(crime_data_stats)
+   ## })
+    
+    #This will print the structure of the data frame, fields and its data type
+   ## output$structure <- renderPrint({
+   ##   str(crime_data())
+   ## })
+    
+    #This will print the summary of the data frame
+   ## output$summary <- renderPrint({
+  ##    summary(crime_data())
+  ##  })
+    
+    #This will print the different crime categories and their count
+   ## output$categoryTable <- renderPrint({
+   ##   table(crime_data()$Crime_Category)
+   ## })    
+ ## }
+  
+    
+    
+    ##bp <- ggplot(filtered_crime, aes(x=filtered_crime$Crime.Subcategory, 
+      ##                               fill = as.factor(filtered_crime$Crime.Subcategory)))+ 
+   ##   bp <- ggplot(crime_set(), aes(x=input$crime, fill=as.factor(crime_set$crime)))+
+  ##                                   ## filtered_crime$Crime.Subcategory, 
+                                       ##fill = as.factor(filtered_crime$Crime.Subcategory)))+ 
+  ##    geom_bar(width = 1, stat="count")
+    
+    
+   ##  barplot(crime_set[,input$neighborhood], 
+   ##         main=input$crime,
+   ##         ylab="Number of Crimes",
+   ##         xlab="Crime")
+   ##   })
+   
+   
+   
+   
+   
+   ## output$crime <- renderUI({
+ ##   selectInput("crime", "Crime", crime_categories())
+ ## })
+  
+##  observe({
+ ##   valu <- unique(unlist(filedata()[input$Crime.Subcategory)]))
+ ##   updateSelectInput(session, "level", choices = valu)
+ ## })
+  
+  ##output$hist <- renderPlot({
+    ##buttons <- switch (input$buttons,
+   ##                    dates = date_info$dates,
+    ##                   lats = ufo_set$lat
+   ## )
+   ## crime <- (input$crime,
+   ##           category = crime_set$Crime.Subcategory)
+      
+   ## p <- ggplot() + theme_no_axes() + coord_fixed()
+    
+    # For low level control you define the start and end angles yourself
+   ## p + geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1, start = start, end = end, 
+                      ##   fill = state),
+                   ##  data = pie)
+##}
+
+
+
+
+##crime_set <- as.data.frame(read.csv("~/Desktop/Info-201/Final/teamAB2/data/5yr_Crime_Data.csv"))
+##crime_set <- saveRDS(object = crime, file = "~/Desktop/Info-201/Final/teamAB2/data/5yr_Crime_Data.csv" )
