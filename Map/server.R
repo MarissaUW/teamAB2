@@ -39,7 +39,7 @@ shinyServer(function(input, output) {
         "1001 - 5000"
       } else if (n <= 10000){
         "5001 - 10000"
-      } else if (n <= 23024){
+      } else{
         "10001 - 23024"
       }
     })
