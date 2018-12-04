@@ -33,7 +33,7 @@ my_ui <- fluidPage(
                   max = 24),
       radioButtons("asc_desc", "Order of Data:",
                    c("Sort by Lowest Rate of Crime" = "asc",
-                     "Sort by Highest Rate of iCrime" = "desc")),
+                     "Sort by Highest Rate of Crime" = "desc")),
       sliderInput("num_neighborhoods", "Number of Neighborhoods to View",
                   min = 1, 
                   max = 59,
