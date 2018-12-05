@@ -7,6 +7,8 @@ crime_set <- as.data.frame(read.csv("5yr_Crime_Data.csv"))
 crime_categories <- unique(crime_set$Crime.Subcategory)
 neighborhoods <- unique(crime_set$Neighborhood)
 
+Crime.Type <-  c("AGGRAVATED ASSAULT","AGGRAVATED ASSAULT-DV","ARSON","BURGLARY-COMMERCIAL","BURGLARY-COMMERCIAL-SECURE PARKING","BURGLARY-RESIDENTIAL","CAR PROWL","DISORDERLY CONDUCT","DUI","FAMILY OFFENSE-NONVIOLENT","GAMBLE","HOMICIDE","LIQUOR LAW VIOLATION","LOITERING","MOTOR VEHICLE THEFT","NARCOTIC","PORNOGRAPHY","PROSTITUTION","RAPE","ROBBERY-COMMERCIAL","ROBBERY-RESIDENTIAL","ROBBERY-STREET","SEX OFFENSE-OTHER","THEFT-ALL OTHER","THEFT-BICYCLE","THEFT-BUILDING","THEFT-SHOPLIFT","TRESPASS","WEAPON")
+
 navbarPage("Seattle Crime Analysis",
            tabPanel("Summary",
                     h1("Seattle Crime Data "),
@@ -126,7 +128,7 @@ navbarPage("Seattle Crime Analysis",
            ),
            
            # A tab to see a bar plot and a pie chart of very broad crimes by chosen precinct and year
-           tabPanel("Broad Crime Count Type by Precint and Year",
+           tabPanel("Broad Crime Count Type by Precinct and Year",
                     sidebarLayout(
                       sidebarPanel(
                         selectInput("precinct", "Precinct:", choices = unique(crime_set$Precinct)),
@@ -162,9 +164,17 @@ navbarPage("Seattle Crime Analysis",
            ),
            
            tabPanel("Crime Map",
-                    leafletOutput("mymap"),
-                    h4(p("Use the side panel to change the neighborhoods displayed based on the crime rate range",
-                         align = "center"))
+                    sidebarLayout(
+                      sidebarPanel(
+                        sliderInput("year", h3("Select Year:"), 2014, 2018, value=c(2014, 2018), step = 1),
+                        sliderInput("Month", "Month:", 1, 12, value=c(0,12), step=1),
+                        selectInput("Day", "Day of Week:", c("All", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")),
+                        selectInput("Crimes", "Crime Type:", c(Crime.Type))
+                      ),
+                      mainPanel(
+                        leafletOutput("map", width = "100%", height = "1000px")
+                      )
+                    )
            )
 )
 
