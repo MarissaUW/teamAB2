@@ -94,12 +94,15 @@ function(input, output, session) {
       ylab("Number of Incidents")
   })
   
+  ## A table with all of the dataset.
   crime_data <- read.csv("5yr_Crime_Data.csv", stringsAsFactors = FALSE)
-  
+   
   output$neighborhoodCrimePlot <- renderPlot({
-    crime_choice <- input$crime
-    date_choice_crime <- input$date_crime
-    dates <- as.Date(crime_data$Occurred.Date, format = "%m/%d/%Y")
+    crime_choice <- input$crime ## Crime that user chooses to view.
+    date_choice_crime <- input$date_crime ## Whether the user wants to 
+                                          ## view all the data or a single
+                                          ## crime.  
+    dates <- as.Date(crime_data$Occurred.Date, format = "%m/%d/%Y") ##
     crime_data$Occurred.Date <- dates
     time_choice <- input$time_range_crime
     
