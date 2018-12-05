@@ -20,7 +20,7 @@ navbarPage("Seattle Crime Analysis",
                     h4("The initial questions we set out asking that drove the direction of our project were:"),
                     h4(tags$li("What is the most common type of crime in the U-District?")),
                     h4(tags$li("What neighborhoods have the lowest and highest rates of crime?")),
-                    h4(tags$li("Which areas have had the highest increase in crime over the past year?")),
+                    h4(tags$li("Which neighborhood, in 2017, has the highest rate of car prowls?")),
                     h4("While these were our guiding questions, we designed our site to be interactive so that users can ask questions that interest them about neighborhoods,
                       crimes, and combinations of both based on a multitude of factors."),
                     
@@ -33,9 +33,6 @@ navbarPage("Seattle Crime Analysis",
                     h4(tags$li("Ben Nielsen")),
                     h4(tags$li("Marissa ...")),
                     h4(tags$li("Paola Vanegas"))
-           ),
-           tabPanel("P Crime Map",
-                    leafletOutput("mymap")
            ),
            
            tabPanel("Crime Map",
@@ -52,21 +49,6 @@ navbarPage("Seattle Crime Analysis",
                                   width = "25%",
                                   height = "auto")
                     ),
-           
-           tabPanel("Ben",
-                    sidebarLayout(
-                      sidebarPanel(
-                        crime_data <- read.csv("5yr_Crime_Data.csv", stringsAsFactors = FALSE),
-                        selectInput("neighborhood_ben", "Neighborhood:", choices = unique(crime_data$Neighborhood)),
-                        selectInput("year", "Year:", choices = c(2014,2015,2016,2017,2018))
-                      ),
-                      
-                      # Show a plot of the generated distribution
-                      mainPanel(
-                        plotOutput("Plot_ben")
-                      )
-                    )
-           ),
            
            ## A tab to view a graph of all the neighborhoods, sorted by crime.
            tabPanel("Neighborhoods by Broad Crime",
@@ -158,7 +140,23 @@ navbarPage("Seattle Crime Analysis",
                     )
            ),
            
-           tabPanel("Plot",
+           # A tab to see a bar plot of specfic crimes by chosen neighborhood and year
+           tabPanel("Specific Crimes by Neighborhood and Year",
+                    sidebarLayout(
+                      sidebarPanel(
+                        selectInput("neighborhood_ben", "Neighborhood:", choices = neighborhoods),
+                        selectInput("year", "Year:", choices = c(2014,2015,2016,2017,2018))
+                      ),
+                      
+                      # Show a plot of the generated distribution
+                      mainPanel(
+                        plotOutput("Plot_ben")
+                      )
+                    )
+           ),
+           
+           # A tab to see a line plot of crime rates per month, with chosen year, neighborhood, and month
+           tabPanel("Total Crime Counts per Month",
                     sidebarLayout(
                       sidebarPanel(
                         # Creates Radio Buttons that allow the user to select a year (between 2014 and 2018)
@@ -174,5 +172,11 @@ navbarPage("Seattle Crime Analysis",
                       mainPanel(
                         plotOutput("linePlot")
                       )
-                    ))
+                    )
+           ),
+           
+           tabPanel("P Crime Map",
+                    leafletOutput("mymap")
+           )
 )
+

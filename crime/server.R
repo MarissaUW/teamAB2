@@ -248,30 +248,4 @@ function(input, output, session) {
       labs(title = "Crime Counts per Day", x = "Day", y = "Crime Count") + 
       theme(axis.text.x = element_text(angle = 30))
   })
-  
-  output$summary <- renderText({
-    h1("Seattle Crime Data ")
-    h3("Data Set:")
-    p("Our project takes data from the City of Seattle open data program. The data we have chosen to use is the crime data from the public safety department. 
-      The dataset we are using was downloaded as a CSV file with up to date information as of November 15, 2018.")
-    
-    h3("Impact:")
-    p("Our goal with this information is to present the data in a way that makes it easy for anyone, and specifically Seattle Residents, to visualize and 
-      understand crime data in the greater Seattle area. We hope that this platform will help users understand the overall safety and crime incidents of 
-      neighborhoods so that they can make more informed decisions on when and where they are in regards to personal safety.")
-    
-    h3("Questions:")
-    p("The initial questions we set out asking that drove the direction of our project were:")
-    p("What is the most common type of crime in the U-District?")
-    p("What neighborhoods have the lowest and highest rates of crime?")
-    p("Which areas have had the highest increase in crime over the past year?")
-    p("While these were our guiding questions, we designed our site to be interactive so that users can ask questions that interest them about neighborhoods,
-            crimes, and combinations of both based on a multitude of factors.")
-    
-    h3("General Observations:")
-    p("Some major points that we picked up on while analyzing this data were that Queen Anne, Capitol Hill, and Northgate have high crime rates compared to other
-      neighborhoods, 12am-3am is the time where the most crimes occur, and car prowls are by far the most occurring crime.")
-    
-  })
-  
 }
