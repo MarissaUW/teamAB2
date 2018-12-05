@@ -102,15 +102,20 @@ function(input, output, session) {
     date_choice_crime <- input$date_crime ## Whether the user wants to 
                                           ## view all the data or a single
                                           ## crime.  
-    dates <- as.Date(crime_data$Occurred.Date, format = "%m/%d/%Y") ##
-    crime_data$Occurred.Date <- dates
-    time_choice <- input$time_range_crime
+    dates <- as.Date(crime_data$Occurred.Date, format = "%m/%d/%Y") ## Sort
+                                          ## the dates in a different format.
+    crime_data$Occurred.Date <- dates ## Set the dates in the table to the new 
+                                      ## formated dates.
+    time_choice <- input$time_range_crime ## The time range the user selects.
     
+    ## If the user chooses a single crime to view.
     if (input$data_choice_crime == "single_crime") {
       observeEvent(input$crime, {
-        enable("crime")
+        enable("crime") ## Enable the crime drop-down menu.
       })
+      ## If the user selects descending order.
       if (input$asc_desc == "desc") {
+        ## Sort all the data by user-chosen parameters, and reflect on the graph.
         crimes <- crime_data %>% 
           group_by(Neighborhood) %>% 
           filter(Occurred.Date >= date_choice_crime[1] & Occurred.Date <= date_choice_crime[2] & 
@@ -119,7 +124,8 @@ function(input, output, session) {
           count() %>% 
           arrange(desc(n)) %>% 
           head(input$num_neighborhoods)  
-      } else {
+      } else { ## If the user selects ascending order.
+        ## Sort all the data by user-chosen parameters, and reflect on the graph.
         crimes <- crime_data %>% 
           group_by(Neighborhood) %>% 
           filter(Occurred.Date >= date_choice_crime[1] & Occurred.Date <= date_choice_crime[2] & 
@@ -129,13 +135,16 @@ function(input, output, session) {
           arrange(n) %>% 
           head(input$num_neighborhoods) 
       }
+      ## Title of the plot, based on the parameters.
       plot_title <- paste("Crimes Rates of", crime_choice, "from", format(date_choice_crime[1], "%B %d, %Y"), 
                           "to", format(date_choice_crime[2], "%B %d, %Y"))
-    } else {
+    } else { ## If the user chooses to view all crime.
       observeEvent(input$crime, {
-        disable("crime")
+        disable("crime") ## Disable the crime drop-down menu.
       })
+      ## If the user selects descending order.
       if (input$asc_desc == "desc") {
+        ## Sort all the data by user-chosen parameters, and reflect on the graph.
         crimes <- crime_data %>% 
           group_by(Neighborhood) %>% 
           filter(Occurred.Date >= date_choice_crime[1] & Occurred.Date <= date_choice_crime[2] & 
@@ -143,7 +152,8 @@ function(input, output, session) {
           count() %>% 
           arrange(desc(n)) %>% 
           head(input$num_neighborhoods)
-      } else {
+      } else { ## If the user selects ascending order.
+        ## Sort all the data by user-chosen parameters, and reflect on the graph.
         crimes <- crime_data %>% 
           group_by(Neighborhood) %>% 
           filter(Occurred.Date >= date_choice_crime[1] & Occurred.Date <= date_choice_crime[2] & 
@@ -152,9 +162,11 @@ function(input, output, session) {
           arrange(n) %>% 
           head(input$num_neighborhoods)
       }
+      ## Title of the plot, based on the parameters.
       plot_title <- paste("Crimes Rates in all Neighborhoods from", format(date_choice_crime[1], "%B %d, %Y"), 
                           "to", format(date_choice_crime[2], "%B %d, %Y"))
     }
+    ## Plot the data, based on the parameters, following specified style.
     ggplot(crimes) +
       geom_col(aes(x=Neighborhood, y=n), fill = "lightblue", color = "darkblue") +
       labs(title=plot_title, y="Number of Occurences", x="Neighborhood") +
@@ -163,35 +175,45 @@ function(input, output, session) {
   
   output$crimePlot <- renderPlot({
     
-    neighborhood_choice <- input$neighborhood
-    date_choice_neighborhood <- input$date_neighborhood
-    dates <- as.Date(crime_data$Occurred.Date, format = "%m/%d/%Y")
-    crime_data$Occurred.Date <- dates
-    time_choice <- input$time_range_neighborhood
+    neighborhood_choice <- input$neighborhood ## Neighborhood that user chooses to view.
+    date_choice_neighborhood <- input$date_neighborhood ## Whether the user wants to 
+                                                        ## view all the data or a single
+                                                        ## neighborhood. 
+    dates <- as.Date(crime_data$Occurred.Date, format = "%m/%d/%Y") ## Sort
+                                                    ## the dates in a different format.
+    crime_data$Occurred.Date <- dates ## Set the dates in the table to the new 
+                                      ## formated dates.
+    time_choice <- input$time_range_neighborhood ## The time range the user selects.
     
+    ## If the user chooses a single neighborhood to view.
     if (input$data_choice_neighborhood == "single_neighborhood") {
       observeEvent(input$neighborhood, {
-        enable("neighborhood")
+        enable("neighborhood") ## Enable the neighborhood drop-down menu.
       })
+      ## Sort all the data by user-chosen parameters.
       crimes <- crime_data %>% 
         group_by(Crime.Subcategory) %>% 
         filter(Occurred.Date >= date_choice_neighborhood[1] & Occurred.Date <= date_choice_neighborhood[2] & Neighborhood == neighborhood_choice &
                  Occurred.Time >= time_choice[1] & Occurred.Time <= time_choice[2]) %>% 
         count() 
+      ## Title of the plot, based on the parameters.
       plot_title <- paste("Crimes in", neighborhood_choice, "from", format(date_choice_neighborhood[1], "%B %d, %Y"), 
                           "to", format(date_choice_neighborhood[2], "%B %d, %Y"))
-    } else {
+    } else { ## If the user chooses to view all neighborhoods.
       observeEvent(input$neighborhood, {
-        disable("neighborhood")
+        disable("neighborhood") ## Disable the neighborhood drop-down menu.
       })
+      ## Sort all the data by user-chosen parameters.
       crimes <- crime_data %>% 
         group_by(Crime.Subcategory) %>% 
         filter(Occurred.Date >= date_choice_neighborhood[1] & Occurred.Date <= date_choice_neighborhood[2] &
                  Occurred.Time >= time_choice[1] & Occurred.Time <= time_choice[2]) %>% 
         count() 
+      ## Title of the plot, based on the parameters.
       plot_title <- paste("Crimes in all Neighborhoods from", format(date_choice_neighborhood[1], "%B %d, %Y"), 
                           "to", format(date_choice_neighborhood[2], "%B %d, %Y"))
     }
+    ## Plot the data, based on the parameters, following specified style.
     ggplot(crimes) +
       geom_col(aes(x=Crime.Subcategory, y=n), fill = "lightblue", color = "darkblue") +
       labs(title=plot_title, y="Number of Occurences", x="Type of Crime") +
