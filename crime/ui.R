@@ -163,8 +163,12 @@ navbarPage("Seattle Crime Analysis",
            
            tabPanel("Crime Map",
                     leafletOutput("mymap"),
-                    h4(p("Use the side panel to change the neighborhoods displayed based on the crime rate range",
-                         align = "center"))
+                    h4(p("Use the side panel to change the neighborhoods displayed based on the crime rate range.",
+                         align = "center")),
+                    h4("Each neighborhood is differetniated by a color (green, orange, yellow, red) depending on
+                        their total crime count over the 4 year span (2014-2018).", align = "center"),
+                    h4(p("Color Key: Green = 0 - 1000, Yellow = 1001 - 5000, Orange = 5001 - 10000, 
+                         Red = 10001 - 23024", align = "center"))
            )
 )
 
