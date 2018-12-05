@@ -67,17 +67,24 @@ navbarPage("Seattle Crime Analysis",
                       )
                     )
            ),
+           
+           ## A tab to view a graph of all the neighborhoods, sorted by crime.
            tabPanel("Neighborhoods by Broad Crime",
                     sidebarLayout(
                       sidebarPanel(
+                        ## Buttons to determine whether to view all the data (all neighborhoods for 
+                        ## all crimes) or a single crime for all neighborhoods.          
                         radioButtons("data_choice_crime", "Data to View:",
                                      c("View All" = "all",
                                        "View Single Crime" = "single_crime")),
                         useShinyjs(),
+                        ## A drop-down menu of different neighborhoods, only enabled when
+                        ## the user wants to view a single crime.           
                         disabled(
                           selectInput("crime", "Crime",
                                       choices = crime_categories)
                         ),
+                        ## Date range from beginning of dataset to end of dataset.          
                         dateRangeInput("date_crime", "Date Range",
                                        format = "mm/dd/yyyy",
                                        start = "01/01/2014",
@@ -86,35 +93,48 @@ navbarPage("Seattle Crime Analysis",
                                        max = "01/01/2018",
                                        startview = "year",
                                        weekstart = 0),
+                        ## A slider to choose the range of hours of the day to view,
+                        ## from 0 (midnight at beginning of the day) to 
+                        ## 24 (midnight at the end of the day).         
                         sliderInput("time_range_crime", "Time Range (Hours):",
                                     range(crime_set$Occurred.Time),
                                     min = 0,
                                     max = 24),
+                        ## Buttons to determine whether to sort the data in
+                        ## ascending or descending order.         
                         radioButtons("asc_desc", "Order of Data:",
                                      c("Sort by Lowest Rate of Crime" = "asc",
                                        "Sort by Highest Rate of Crime" = "desc")),
+                        ## A slider to determine how many neighborhoods to view on the plot.        
                         sliderInput("num_neighborhoods", "Number of Neighborhoods to View",
                                     min = 1, 
                                     max = 59,
                                     59)
                       ),
+                      ## Plotting the crime for different neighborhoods.         
                       mainPanel(
                         plotOutput("neighborhoodCrimePlot")
                       )
                     )
            ),
            
+           ## A tab to view a graph of all the crimes, sorted by neighborhood.
            tabPanel("Broad Crimes by Neighborhoods",
                     sidebarLayout(
                       sidebarPanel(
+                        ## Buttons to determine whether to view all the data (all crimes for all 
+                        ## neighborhoods) or the crimes for a single neighborhood.         
                         radioButtons("data_choice_neighborhood", "Data to View:",
                                      c("View All" = "all",
                                        "View Single Neighborhood" = "single_neighborhood")),
                         useShinyjs(),
+                        ## A drop-down menu of different neighborhoods, only enabled when
+                        ## the user wants to view a single neighborhood.         
                         disabled(
                           selectInput("neighborhood", "Neighborhood",
                                       choices = neighborhoods)
                         ),
+                        ## Date range from beginning of dataset to end of dataset.        
                         dateRangeInput("date_neighborhood", "Date Range",
                                        format = "mm/dd/yyyy",
                                        start = "01/01/2014",
@@ -123,16 +143,21 @@ navbarPage("Seattle Crime Analysis",
                                        max = "01/01/2018",
                                        startview = "year",
                                        weekstart = 0),
+                        ## A slider to choose the range of hours of the day to view,
+                        ## from 0 (midnight at beginning of the day) to 
+                        ## 24 (midnight at the end of the day).
                         sliderInput("time_range_neighborhood", "Time Range (Hours)",
                                     range(crime_set$Occurred.Time),
                                     min = 0,
                                     max = 24)
                       ),
+                      ## Plotting the crime plot.         
                       mainPanel(
                         plotOutput("crimePlot")
                       )
                     )
            ),
+           
            tabPanel("Plot",
                     sidebarLayout(
                       sidebarPanel(
