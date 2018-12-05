@@ -31,27 +31,12 @@ navbarPage("Seattle Crime Analysis",
                     h2("Creators:"),
                     h4(tags$li("Claire Lynch")),
                     h4(tags$li("Ben Nielsen")),
-                    h4(tags$li("Marissa ...")),
+                    h4(tags$li("Marissa Hermsen")),
                     h4(tags$li("Paola Vanegas"))
            ),
            
-           tabPanel("Crime Map",
-                    leafletOutput("map"),
-                    #overlay panel
-                    absolutePanel(id = "description",
-                                  class = "panel panel-default",
-                                  fixed = T,
-                                  draggable = T,
-                                  top = 90,
-                                  left = "auto",
-                                  right = 20,
-                                  bottom = "auto",
-                                  width = "25%",
-                                  height = "auto")
-                    ),
-           
            ## A tab to view a graph of all the neighborhoods, sorted by crime.
-           tabPanel("Neighborhoods by Broad Crime",
+           tabPanel("Neighborhoods by Crime",
                     sidebarLayout(
                       sidebarPanel(
                         ## Buttons to determine whether to view all the data (all neighborhoods for 
@@ -101,7 +86,7 @@ navbarPage("Seattle Crime Analysis",
            ),
            
            ## A tab to view a graph of all the crimes, sorted by neighborhood.
-           tabPanel("Broad Crimes by Neighborhoods",
+           tabPanel("Crimes by Neighborhoods",
                     sidebarLayout(
                       sidebarPanel(
                         ## Buttons to determine whether to view all the data (all crimes for all 
@@ -176,7 +161,9 @@ navbarPage("Seattle Crime Analysis",
            ),
            
            tabPanel("P Crime Map",
-                    leafletOutput("mymap")
+                    leafletOutput("mymap"),
+                    h4(p("Use the side panel to change the neighborhoods displayed based on the crime rate range",
+                         align = "center"))
            )
 )
 
