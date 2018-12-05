@@ -4,42 +4,7 @@ library(dplyr)
 library(ggplot2)
 library(shinyjs)
 
-clean_crime <- readRDS("clean_crime.rds")
-hood.sf <- read_sf("hood_shapes.shp")
-crime <- read.csv("crime_data.csv", stringsAsFactors = FALSE)
-
-factpal3 <- colorFactor(rep(unique(yarrr::piratepal("basel")),
-                            length.out = nrow(hood.sf)),
-                        hood.sf$S_HOOD)
-hood_popup <- paste0("<strong>Neighborhood: </strong>", 
-                      hood.sf$S_HOOD) 
-
-function(input, output, session) {
-  output$summary <- renderPrint({
-  })
-  
-  output$map <- renderLeaflet({
-    leaflet() %>% 
-      neighborhoods <- crime %>% distinct(Neighborhood, long, lat) %>% 
-      addProviderTiles(providers$OpenStreetMap.BlackAndWhite) %>%
-      addPolygons(data = hood.sf,
-                  smoothFactor = 0.75, 
-                  opacity = 0, 
-                  fillOpacity = 0.6,
-                  stroke = FALSE,
-                  fillColor = ~factpal3(hood.sf$S_HOOD),
-                  popup = hood_popup) %>% 
-      addCircleMarkers(lng = ~as.numeric(long), lat = ~as.numeric(lat),
-                       label = ~paste(Neighborhood, "(Num of Crimes:",n,")"),
-                       data = crime,
-                       radius = 5,
-                       color = getColor(neighborhoods),
-                       group = group_name(neighborhoods)) %>% 
-      addLayersControl(overlayGroups = c("<= 1000", "1001 - 5000", "5001 - 10000", "10001 - 23014"),
-                         options = layersControlOptions(collapsed = FALSE))
-  })
-  
-  
+shinyServer(function(input, output) { 
   # Determines the color of the marker based on the number of crimes committed in given neighborhood
   getColor <- function(set){
     sapply(set$n, function(n){
@@ -381,4 +346,4 @@ function(input, output, session) {
     pie(slices,labels = lbls, col=rainbow(length(lbls)),
         main="")
   })
-}
+})

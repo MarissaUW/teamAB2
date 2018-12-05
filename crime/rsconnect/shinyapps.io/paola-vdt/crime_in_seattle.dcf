@@ -5,8 +5,9 @@ account: paola-vdt
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 604447
-bundleId: 1743894
+bundleId: 1744088
 url: https://paola-vdt.shinyapps.io/crime_in_seattle/
-when: 1544046486.4603
+when: 1544050770.95171
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: clean_crime.rds|hood_shapes.dbf|hood_shapes.prj|hood_shapes.shp|hood_shapes.shx

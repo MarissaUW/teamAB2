@@ -164,27 +164,13 @@ navbarPage("Seattle Crime Analysis",
            ),
            
            tabPanel("Crime Map",
-<<<<<<< HEAD
                     leafletOutput("mymap"),
                     h4(p("Use the side panel to change the neighborhoods displayed based on the crime rate range.",
                          align = "center")),
                     h4("Each neighborhood is differetniated by a color (green, orange, yellow, red) depending on
                         their total crime count over the 4 year span (2014-2018).", align = "center"),
-                    h4(p("Color Key: Green = 0 - 1000, Yellow = 1001 - 5000, Orange = 5001 - 10000, 
+                    h4(p("Color Key: Green = 0 - 1000, Yellow = 1001 - 5000, Orange = 5001 - 10000,
                          Red = 10001 - 23024", align = "center"))
-=======
-                    sidebarLayout(
-                      sidebarPanel(
-                        sliderInput("year", h3("Select Year:"), 2014, 2018, value=c(2014, 2018), step = 1),
-                        sliderInput("Month", "Month:", 1, 12, value=c(0,12), step=1),
-                        selectInput("Day", "Day of Week:", c("All", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")),
-                        selectInput("Crimes", "Crime Type:", c(Crime.Type))
-                      ),
-                      mainPanel(
-                        leafletOutput("map", width = "100%", height = "1000px")
-                      )
-                    )
->>>>>>> 12f4b7dada719faed9a7a4904038156a8209d6b7
            )
 )
 
