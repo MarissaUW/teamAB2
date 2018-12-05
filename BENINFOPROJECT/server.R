@@ -5,7 +5,7 @@ library(ggplot2)
 # Define server logic required to draw a plot
 shinyServer(function(input, output) {
   #read CSV file into data frame
-  readData <- crime_data <- read.csv("../data/5yr_Crime_Data.csv")
+  readData <- read.csv("../data/5yr_Crime_Data.csv")
   #define plot
   output$Plot <- renderPlot({
     
@@ -24,19 +24,19 @@ shinyServer(function(input, output) {
         recode(data1$Crime.Subcategory,
                "AGGRAVATED ASSAULT" = "ASSAULT",
                "AGGRAVATED ASSAULT-DV" = "ASSAULT",
-               "ARSON" = "OTHER",
+               "ARSON" = "ARSON",
                "BURGLARY-COMMERCIAL" = "BURGLARY",
                "BURGLARY-COMMERCIAL-SECURE PARKING" = "BURGLARY",
                "BURGLARY-RESIDENTIAL" = "BURGLARY",
                "BURGLARY-RESIDENTIAL-SECURE PARKING" = "BURGLARY",
                "CAR PROWL" = "CAR PROWL",
-               "DISORDERLY CONDUCT" = "OTHER",
+               "DISORDERLY CONDUCT" = "DISORDERLY CONDUCT",
                "DUI" = "DUI",
                "FAMILY OFFENSE-NONVIOLENT" = "FAMILY OFFENSE-NONVIOLENT",
-               "GAMBLE" = "OTHER",
+               "GAMBLE" = "GAMBLE",
                "HOMICIDE" = "HOMICIDE",
-               "LIQUOR LAW VIOLATION" = "OTHER",
-               "LOITERING" = "OTHER",
+               "LIQUOR LAW VIOLATION" = "LIQUOR LAW VIOLATION",
+               "LOITERING" = "LOITERING",
                "MOTOR VEHICLE THEFT" = "THEFT",
                "NARCOTIC" = "NARCOTIC",
                "PORNOGRAPHY" = "PORNOGRAPHY",
@@ -121,13 +121,8 @@ shinyServer(function(input, output) {
      group_by(Crime.Subcategory)%>%
      summarise( sum = sum(n))
   
- 
-   
-  
-  View(data2)
     
-    #plot
-  #  pie(data2$n, labels = data2$Crime.Subcategory, main="Pie Chart Visualization")
+    #plot pie(data2$n, labels = data2$Crime.Subcategory, main="Pie Chart Visualization")
    slices <- data2$sum
    lbls <- data2$Crime.Subcategory
    pct <- round(slices/sum(slices)*100)

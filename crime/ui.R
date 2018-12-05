@@ -125,20 +125,21 @@ navbarPage("Seattle Crime Analysis",
                     )
            ),
            
-           # A tab to see a bar plot of specfic crimes by chosen neighborhood and year
-           tabPanel("Specific Crimes by Neighborhood and Year",
+           # A tab to see a bar plot and a pie chart of very broad crimes by chosen precinct and year
+           tabPanel("Broad Crime Count Type by Precint and Year",
                     sidebarLayout(
                       sidebarPanel(
-                        selectInput("neighborhood_ben", "Neighborhood:", choices = neighborhoods),
+                        selectInput("precinct", "Precinct:", choices = unique(crime_set$Precinct)),
                         selectInput("year", "Year:", choices = c(2014,2015,2016,2017,2018))
                       ),
                       
-                      # Show a plot of the generated distribution
+                      # Show two plots of the generated distribution (bar and pie)
                       mainPanel(
-                        plotOutput("Plot_ben")
+                        plotOutput("Plot"), 
+                        plotOutput("Plot2")
                       )
                     )
-           ),
+            ),
            
            # A tab to see a line plot of crime rates per month, with chosen year, neighborhood, and month
            tabPanel("Total Crime Counts per Month",
@@ -160,7 +161,7 @@ navbarPage("Seattle Crime Analysis",
                     )
            ),
            
-           tabPanel("P Crime Map",
+           tabPanel("Crime Map",
                     leafletOutput("mymap"),
                     h4(p("Use the side panel to change the neighborhoods displayed based on the crime rate range",
                          align = "center"))
