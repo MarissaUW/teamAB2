@@ -1,0 +1,12 @@
+name: crime_in_seattle
+title: crime_in_seattle
+username:
+account: paola-vdt
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 604447
+bundleId: 1741448
+url: https://paola-vdt.shinyapps.io/crime_in_seattle/
+when: 1543986319.40139
+asMultiple: FALSE
+asStatic: FALSE
